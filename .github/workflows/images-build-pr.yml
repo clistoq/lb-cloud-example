@@ -15,15 +15,15 @@ jobs:
     - uses: actions/checkout@v2
     - name: Nginx container build
       uses: int128/kaniko-action@v1
-        with:
-          push: false
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
-          context: docker/nginx
+      with:
+        push: false
+        tags: ${{ steps.metadata.outputs.tags }}
+        labels: ${{ steps.metadata.outputs.labels }}
+        context: docker/nginx
     - name: Apache container build
       uses: int128/kaniko-action@v1
-        with:
-          push: false
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
-          context: docker/apache
+      with:
+        push: false
+        tags: ${{ steps.metadata.outputs.tags }}
+        labels: ${{ steps.metadata.outputs.labels }}
+        context: docker/apache
