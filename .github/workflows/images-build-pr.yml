@@ -1,0 +1,35 @@
+name: Docker PR CI
+
+on:
+  pull_request:
+    types: [ opened, edited, reopened, review_requested, synchronize ]
+
+jobs:
+
+  nginx-oci:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Nginx container build
+      uses: int128/kaniko-action@v1
+      with:
+        push: false
+        tags: ${{ steps.metadata.outputs.tags }}
+        labels: ${{ steps.metadata.outputs.labels }}
+        context: docker/nginx
+
+  apache-oci:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Apache container build
+      uses: int128/kaniko-action@v1
+      with:
+        push: false
+        tags: ${{ steps.metadata.outputs.tags }}
+        labels: ${{ steps.metadata.outputs.labels }}
+        context: docker/apache
