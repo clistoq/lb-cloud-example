@@ -3,7 +3,6 @@ name: Docker PR CI
 on:
   pull_request:
     types: [ opened, edited, reopened, review_requested, synchronize ]
-    branches: [ $default-branch ]
 
 jobs:
 
