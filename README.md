@@ -7,13 +7,13 @@ simple load balancing between servers using popular solution which is HAProxy.
 # Deployment
 ## Overview
 
-** Local **
+**Local**  
 To run containers and test traffic run:
 ```
 docker-compose --file docker-compose-local.yml up --detach
 ```
 
-** From Docker Hub **
+**From Docker Hub**  
 To run containers and test traffic run:
 ```
 docker-compose up --detach
