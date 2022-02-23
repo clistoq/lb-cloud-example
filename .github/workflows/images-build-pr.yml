@@ -12,6 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/metadata-action@v3
+      id: metadata
+      with:
+        images: lb-example-nginx
     - name: Nginx container build
       uses: int128/kaniko-action@v1
       with:
@@ -20,12 +24,16 @@ jobs:
         labels: ${{ steps.metadata.outputs.labels }}
         context: docker/nginx
 
-  apache-oci:
+  httpd-oci:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/metadata-action@v3
+      id: metadata
+      with:
+        images: lb-example-httpd
     - name: Apache container build
       uses: int128/kaniko-action@v1
       with:
