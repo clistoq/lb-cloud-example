@@ -15,7 +15,7 @@ jobs:
     - uses: docker/metadata-action@v3
       id: metadata
       with:
-        images: lb-example-nginx
+        images: ulvhed/lb-example-nginx
     - name: Nginx container build
       uses: int128/kaniko-action@v1
       with:
@@ -33,7 +33,7 @@ jobs:
     - uses: docker/metadata-action@v3
       id: metadata
       with:
-        images: lb-example-httpd
+        images: ulvhed/lb-example-httpd
     - name: Apache container build
       uses: int128/kaniko-action@v1
       with:
