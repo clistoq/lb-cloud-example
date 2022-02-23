@@ -1,8 +1,11 @@
 version: '3.9'
+
 services:
   spa_nginx:
     build: ./docker/nginx
     container_name: spa_nginx
+    expose:
+      - 80
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost']
       interval: 30s
@@ -11,12 +14,16 @@ services:
       start_period: 10s
     networks:
       lb_example:
+        ipv4_address: 172.28.0.18
         aliases:
           - nginx
     restart: on-failure
+
   spa_apache:
     build: ./docker/apache
     container_name: spa_apache
+    expose:
+      - 80
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost']
       interval: 30s
@@ -25,9 +32,34 @@ services:
       start_period: 10s
     networks:
       lb_example:
+        ipv4_address: 172.28.0.19
         aliases:
           - apache
     restart: on-failure
+
+  haproxy:
+    container_name: haproxy
+    depends_on:
+      - spa_nginx
+      - spa_apache
+    expose:
+      - 80
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost']
+      interval: 30s
+      timeout: 10s
+      retries: 1
+      start_period: 10s
+    image: haproxy:2.5.3-alpine3.15
+    networks:
+      lb_example:
+        ipv4_address: 172.28.0.10
+    ports:
+      - 80:80
+    restart: on-failure
+    volumes:
+      - ./docker/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
 networks:
   lb_example:
     driver: bridge
