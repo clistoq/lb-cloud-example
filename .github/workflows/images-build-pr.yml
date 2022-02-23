@@ -3,9 +3,6 @@ name: Docker PR CI
 on:
   pull_request:
     types: [ opened, edited, reopened, review_requested, synchronize ]
-  push:
-    paths-ignore:
-      - 'docker-compose*.yml'
 
 jobs:
 
