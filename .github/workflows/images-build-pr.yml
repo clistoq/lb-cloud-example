@@ -3,6 +3,9 @@ name: Docker PR CI
 on:
   pull_request:
     types: [ opened, edited, reopened, review_requested, synchronize ]
+  push:
+    paths-ignore:
+      - 'docker-compose*.yml'
 
 jobs:
 
@@ -12,24 +15,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/metadata-action@v3
+      id: metadata
+      with:
+        images: lb-example-nginx
     - name: Nginx container build
       uses: int128/kaniko-action@v1
       with:
         push: false
         tags: ${{ steps.metadata.outputs.tags }}
-        labels: ${{ steps.metadata.outputs.labels }}
         context: docker/nginx
 
-  apache-oci:
+  httpd-oci:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/metadata-action@v3
+      id: metadata
+      with:
+        images: lb-example-httpd
     - name: Apache container build
       uses: int128/kaniko-action@v1
       with:
         push: false
         tags: ${{ steps.metadata.outputs.tags }}
-        labels: ${{ steps.metadata.outputs.labels }}
         context: docker/apache
